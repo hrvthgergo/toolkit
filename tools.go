@@ -32,6 +32,8 @@ for this reason you need to:
 - file/add this folder to the workspace
 - run go mod init <module-name> in the new folder
 - run go work use new folder
+
+e.g. app_dir or app_upload were created to test the toolkit module this way.
 */
 
 package toolkit
@@ -179,4 +181,16 @@ func (t *Tools) UploadFile(r *http.Request, uploadDir string, rename ...bool) ([
 		}
 	}
 	return uploadedFiles, nil
+}
+
+// CreateDirIfNotExist creates a directory and all its parent directories if they do not exist.
+func (t *Tools) CreateDirIfNotExist(path string) error {
+	const mode = 0755
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		err = os.MkdirAll(path, mode)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
