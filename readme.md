@@ -12,6 +12,7 @@ tools are:
 - [X] create a random string of lenth n
 - [ ] post json to a remote service
 - [X] create a directory, including all parent directories, if it does not already exist
+- [X] create a slug from a string
 
 # intallation
 

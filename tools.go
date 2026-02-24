@@ -30,10 +30,13 @@ C) to test new features of your code sometimes you have to add new folder to bot
 for this reason you need to:
 - create a new folder
 - file/add this folder to the workspace
-- run go mod init <module-name> in the new folder
+- run go mod init <module-name> in the new folder because empty file scannot be added to go wokrspaces
 - run go work use new folder
 
 e.g. app_dir or app_upload were created to test the toolkit module this way.
+
+slugs:
+from a string create a url safe slug, e.g. "Hello World" -> "hello-world"
 */
 
 package toolkit
@@ -46,6 +49,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -198,4 +202,19 @@ func (t *Tools) CreateDirIfNotExist(path string) error {
 		}
 	}
 	return nil
+}
+
+// Slufify creates a url safe slug from a string
+func (t *Tools) Slufify(s string) (string, error) {
+	if s == "" {
+		return "", errors.New("empty string is not permitted")
+	}
+
+	var re = regexp.MustCompile(`[^a-z\d]+`)
+	slug := strings.Trim(re.ReplaceAllString(strings.ToLower(s), "-"), "-")
+	if len(slug) == 0 {
+		return "", errors.New("after removing characters, slug is zero length")
+	}
+	return slug, nil
+
 }
