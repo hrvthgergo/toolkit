@@ -197,7 +197,7 @@ func TestTools_Slugify(t *testing.T) {
 	var testtools Tools
 
 	for _, e := range slugTests {
-		slug, err := testtools.Slufify(e.toSlugify)
+		slug, err := testtools.Slugify(e.toSlugify)
 		if err != nil && !e.errorExpected {
 			t.Errorf("%s: unexpected error: %s", e.name, err.Error())
 		}

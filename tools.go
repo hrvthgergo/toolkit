@@ -204,8 +204,8 @@ func (t *Tools) CreateDirIfNotExist(path string) error {
 	return nil
 }
 
-// Slufify creates a url safe slug from a string
-func (t *Tools) Slufify(s string) (string, error) {
+// Slugify creates a url safe slug from a string
+func (t *Tools) Slugify(s string) (string, error) {
 	if s == "" {
 		return "", errors.New("empty string is not permitted")
 	}
