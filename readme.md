@@ -1,4 +1,4 @@
-# toolbox
+# toolkit
 
 a simple example of how to create a go module with commonly used tools.
 
@@ -11,6 +11,7 @@ tools are:
 - [ ] download a static file
 - [X] create a random string of lenth n
 - [ ] post json to a remote service
+- [X] create a directory, including all parent directories, if it does not already exist
 
 # intallation
 
