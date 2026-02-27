@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"io"
 	"mime/multipart"
+	"net/http"
 	"net/http/httptest"
 	"os"
 	"sync"
@@ -206,4 +207,25 @@ func TestTools_Slugify(t *testing.T) {
 			t.Errorf("%s: expected slug %s, but got %s", e.name, e.expected, slug)
 		}
 	}
+}
+
+func TestTools_DownloadStaticFile(t *testing.T) {
+
+	rr := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	var testtool Tools
+	testtool.DownloadStaticFile(rr, req, "./testdata", "img.png", "downloadedAndRenamed.png")
+
+	res := rr.Result()
+	defer res.Body.Close()
+
+	if res.Header["Content-Length"][0] != "534283" {
+		t.Errorf("expected content length of 534283, got %s", res.Header["Content-Length"][0])
+	}
+
+	if res.Header["Content-Disposition"][0] != "attachment; filename=\"downloadedAndRenamed.png\"" {
+		t.Errorf("wrong content disposition, expected: ttachment; filename=\"downloadedAndRenamed.png\", got %s", res.Header["Content-Disposition"][0])
+	}
+
 }
